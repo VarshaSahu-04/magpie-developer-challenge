@@ -2,17 +2,37 @@
 
 namespace App;
 
-use GuzzleHttp\Client;
-use Symfony\Component\DomCrawler\Crawler;
+require_once 'HttpClient.php';
+require_once 'ProductExtractor.php';
 
 class ScrapeHelper
 {
-    public static function fetchDocument(string $url): Crawler
+    private HttpClient $client;
+    private ProductExtractor $extractor;
+
+    public function __construct(string $baseUri)
     {
-        $client = new Client();
+        $this->client = new HttpClient($baseUri);
+        $this->extractor = new ProductExtractor();
+    }   
 
-        $response = $client->get($url);
+    public function scrapeHelper(string $endpoint): array
+    {
+        
+        $products = [];
+        $page = 1;
 
-        return new Crawler($response->getBody()->getContents(), $url);
+        try {
+            do {
+                $html = $this->client->fetchPage($endpoint, $page);
+                $products = array_merge($products, $this->extractor->extractProducts($html));
+                $page++;
+            } while ($this->extractor->hasNextPage($html));
+        } catch (\Exception $e) {           
+            error_log("Error during scraping: " . $e->getMessage());            
+            return $products; // Return whatever products were successfully scraped
+        }
+
+        return $this->extractor->extractArray($products);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
-
 require 'vendor/autoload.php';
+
+use App\ScrapeHelper;
 
 class Scrape
 {
@@ -10,9 +10,18 @@ class Scrape
 
     public function run(): void
     {
-        $document = ScrapeHelper::fetchDocument('https://www.magpiehq.com/developer-challenge/smartphones');
+        
+        try {
+            $scraper = new ScrapeHelper('https://www.magpiehq.com/');
+            $products = $scraper->scrapeHelper('developer-challenge/smartphones');  
 
-        file_put_contents('output.json', json_encode($this->products));
+            // Save products to JSON file
+            file_put_contents('output.json', json_encode($products, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+        } catch (\Exception $e) {            
+            error_log("Error during scraping: " . $e->getMessage());
+           
+        }
     }
 }
 
