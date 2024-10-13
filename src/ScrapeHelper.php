@@ -24,7 +24,7 @@ class ScrapeHelper
 
         try {
             do {
-                $html = $this->client->fetchPage($endpoint, $page);
+                $html = $this->client->fetchPage($endpoint, $page); // fetch HTML element based on pagination
                 $products = array_merge($products, $this->extractor->extractProducts($html));
                 $page++;
             } while ($this->extractor->hasNextPage($html));
@@ -33,6 +33,6 @@ class ScrapeHelper
             return $products; // Return whatever products were successfully scraped
         }
 
-        return $this->extractor->extractArray($products);
+        return $this->extractor->extractArray($products); // Convert Object into Array
     }
 }

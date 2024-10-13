@@ -18,13 +18,14 @@ class ProductExtractor
            
             $crawler->filter('.product')->each(function (Crawler $node) use (&$products) {
                 try {
+                    //extract product details like title, price, capacity, color, imageurl.
                     $extractedProducts = $this->extractProductData($node);
                     foreach ($extractedProducts as $product) {
                         $uniqueKey = $product->getTitle() . '|' . $product->getPrice() . '|' . $product->getCapacityMB() . '|' . $product->getColour();
                         
-                        // Check for uniqueness
+                        // Check for uniqueness. De-duplication check.
                         if (!isset($this->uniqueProducts[$uniqueKey])) {
-                            $this->uniqueProducts[$uniqueKey] = true; // Mark as seen
+                            $this->uniqueProducts[$uniqueKey] = true; 
                             $products[] = $product; 
                         }
                     }
@@ -39,7 +40,7 @@ class ProductExtractor
         }
 
         return $products;
-        //return $this->extractArray($products);
+        
     }
 
     private function extractProductData(Crawler $node): array
