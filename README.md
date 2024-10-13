@@ -19,7 +19,7 @@ The final output of my script is an array of objects similar to the example belo
 
 ```
 
-I have used same repository goven by client as a starter template.
+I have used same repository given by client as a starter template.
 
 Result is created in `output.json`.
 
