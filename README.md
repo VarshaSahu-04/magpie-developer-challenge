@@ -24,11 +24,12 @@ I have used same repository given by client as a starter template.
 Result is created in `output.json`.
 
 ### Notes as per bellow instaructions
-* I have de-dupe data. Client will not see the same product twice, even if it’s listed twice on the website. Product is diffrentiated by title,price,color,capacity.  
-* All product variants are captured. Each colour variant is treated as a separate product.
-* Device capacity is captured in MB for all products (not GB)
-* The final output is an array of products, outputted to `output.json`
-* Pagination is also considered!
+* De-duplication: Ensured that the client does not see the same product multiple times, even if it’s listed more than once on the website. Products are differentiated by title, price, color, and capacity.
+* Variant Capture: All product variants are captured, with each color variant treated as a separate product.
+* Capacity in MB: Device capacity is recorded in megabytes (MB) for all products.
+* Pagination: The scraper handles pagination to capture all product pages.
+* Testing: Utilized PHPUnit to run test cases, ensuring the reliability of the code
+
 
 
 ### Requirements
@@ -45,3 +46,7 @@ composer install
 ```
 
 To run the scrape you can use `php src/Scrape.php`
+
+### Output
+
+The final results will be saved in output.json located in the project root.
