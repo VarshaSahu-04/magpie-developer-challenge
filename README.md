@@ -23,7 +23,7 @@ I have used same repository given by client as a starter template.
 
 Result is created in `output.json`.
 
-### Notes as per bellow instaructions
+### Notes as per bellow instructions
 * De-duplication: Ensured that the client does not see the same product multiple times, even if it’s listed more than once on the website. Products are differentiated by title, price, color, and capacity.
 * Variant Capture: All product variants are captured, with each color variant treated as a separate product.
 * Capacity in MB: Device capacity is recorded in megabytes (MB) for all products.
